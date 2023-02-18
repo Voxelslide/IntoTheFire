@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 8104895948133509155}
   - component: {fileID: 2537039421088704486}
   - component: {fileID: 4683762654640765026}
+  - component: {fileID: 3952577599785621308}
   m_Layer: 0
   m_Name: Wall Tile 4x4 (1)
   m_TagString: Untagged
@@ -220,6 +221,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3952577599785621308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354844868435805783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 31.999994, y: 31.999996, z: 0.1}
+  m_Center: {x: 0, y: 15.999998, z: -0.00017879813}
 --- !u!1 &1760357966211497386
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,6 +949,7 @@ GameObject:
   - component: {fileID: 6285890524135104476}
   - component: {fileID: 6287289561692466688}
   - component: {fileID: 6297294215348054084}
+  - component: {fileID: 6491151336853089782}
   m_Layer: 0
   m_Name: Wall Tile 4x4
   m_TagString: Untagged
@@ -1006,6 +1021,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6491151336853089782
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284281096776282250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 31.999994, y: 31.999996, z: 0.1}
+  m_Center: {x: 0, y: 15.999998, z: -0.00017879813}
 --- !u!1 &6503778187048421080
 GameObject:
   m_ObjectHideFlags: 0

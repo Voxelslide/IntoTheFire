@@ -404,6 +404,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: de289d09-2f88-4013-8959-3c90ad5959b1
     m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa85a82f-87b7-4029-ae3c-fa548b453cff
+    m_ActionName: Player/Join[/XInputControllerWindows/start,/XInputControllerWindows/start,/SwitchProControllerHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
