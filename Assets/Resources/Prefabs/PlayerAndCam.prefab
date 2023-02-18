@@ -93,7 +93,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4287060579595423400}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -404,6 +404,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: de289d09-2f88-4013-8959-3c90ad5959b1
     m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa85a82f-87b7-4029-ae3c-fa548b453cff
+    m_ActionName: Player/Join[/XInputControllerWindows/start,/XInputControllerWindows/start,/SwitchProControllerHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -426,7 +430,8 @@ MonoBehaviour:
   moveSpeed: 7
   playerHeight: 2
   groundDrag: 3
-  jumpForce: 6
+  gravity: -9.8
+  jumpForce: 10
   airMultiplier: 0.4
 --- !u!114 &4287060580277438668
 MonoBehaviour:
@@ -539,7 +544,7 @@ BoxCollider:
   m_GameObject: {fileID: 4287060580407020130}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
