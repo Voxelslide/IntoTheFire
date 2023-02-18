@@ -423,11 +423,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 4287060579910169157}
   player: {fileID: 4287060580143953257}
-  moveSpeed: 5
-  rb: {fileID: 0}
+  moveSpeed: 7
   playerHeight: 2
   groundDrag: 3
-  jumpForce: 5
+  jumpForce: 6
   airMultiplier: 0.4
 --- !u!114 &4287060580277438668
 MonoBehaviour:

@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
   private float moveSpeed;
   //public Transform orientation;
   private Vector2 moveInput;
-  public Rigidbody rb;
+  private Rigidbody rb;
   private Vector3 moveDirection;
 
   private float currVel;
