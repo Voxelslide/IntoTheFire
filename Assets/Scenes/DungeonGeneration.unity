@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7464c25e0b7bbc409c26de38138d5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonSize: 7
+  dungeonSize: 6
   teleporterRoom: {fileID: 1643158295423479796, guid: f503d3bbe1f04ee478fffc59a17617e1, type: 3}
   room1x1: {fileID: 1643158295423479796, guid: d20cfbb9e4d9cda42a666fb0f4a13092, type: 3}
   room1x2: {fileID: 4810757022718223878, guid: 18c5fbe979eb6de42a990516badcb684, type: 3}
