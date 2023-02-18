@@ -41,7 +41,7 @@ public class DungeonGeneration : MonoBehaviour
 
     //create teleporter rooms
 
-    GenerateTeleporterRooms();
+    //GenerateTeleporterRooms();
 
 
     //link teleporter rooms to trial rooms
@@ -63,11 +63,11 @@ public class DungeonGeneration : MonoBehaviour
 
         if (roomType == 1)
         {
-          Instantiate(room1x2, new Vector3(i * 150f, 0f, j * 150f), new Quaternion(0, rotation, 0, rotation), this.transform);
+          Instantiate(room1x2, new Vector3(i * 100f, 0f, j * 100f), new Quaternion(0, rotation, 0, rotation), this.transform);
         }
         if (roomType == 2)
         {
-          Instantiate(room2x2, new Vector3(i * 150f, 0f, j * 150f), new Quaternion(0, 0, 0, 0), this.transform);
+          Instantiate(room2x2, new Vector3(i * 100f, 0f, j * 100f), new Quaternion(0, 0, 0, 0), this.transform);
         }
 
         trialRooms.Add(transform.GetChild(i * dungeonSize + j).gameObject);
