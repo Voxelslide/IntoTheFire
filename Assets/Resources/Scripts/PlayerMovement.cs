@@ -29,14 +29,13 @@ public class PlayerMovement : MonoBehaviour
   private bool grounded;
 
   [Header("Jumping")]
-  //[SerializeField]
-  //private float gravity = -9.8f;
+  [SerializeField]
+  private float gravity = -9.8f;
   private bool jumpInput;
   [SerializeField]
   private float jumpForce;
   [SerializeField]
   private float airMultiplier;
-  bool canJump;
 
 
   private void Awake()
@@ -53,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 	void FixedUpdate()
   {
 
-    //ApplyGravity();
+    ApplyGravity();
 
     GroundedCheck();
 
@@ -73,34 +72,36 @@ public class PlayerMovement : MonoBehaviour
     if (ctx.started && grounded) Jump();
   }
 
-	private void Move()
-	{
+  private void Move()
+  {
+    { 
+    //if (moveInput != Vector2.zero)
+    //{
+    /*//Get angle of movement (Atan2 is tangent, but always defined as clockwise rotation starting in positive xy space
+    float inputAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
 
-		//if (moveInput != Vector2.zero)
-		//{
-      /*//Get angle of movement (Atan2 is tangent, but always defined as clockwise rotation starting in positive xy space
-			float inputAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+    inputAngle += camera.transform.rotation.eulerAngles.y;
 
-			inputAngle += camera.transform.rotation.eulerAngles.y;
+    float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, inputAngle, ref currVel, 0.1f);
 
-			float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, inputAngle, ref currVel, 0.1f);
+    //rotate player where they are moving
+    player.transform.rotation = Quaternion.Euler(0f, inputAngle, 0f);
 
-			//rotate player where they are moving
-			player.transform.rotation = Quaternion.Euler(0f, inputAngle, 0f);
+    //Input forward is camera forward, regardless of player rotation
+    moveDirection = Quaternion.Euler(0f, inputAngle, 0f) * Vector3.forward;*/
+    //Rotate character to be aligned with the camera
+    //var rotation = Quaternion.LookRotation(forward);
+    //rotation *= player.transform.rotation;
+    //player.transform.rotation = rotation;
+    //}
+    }//old code
 
-			//Input forward is camera forward, regardless of player rotation
-			moveDirection = Quaternion.Euler(0f, inputAngle, 0f) * Vector3.forward;*/
-      //Rotate character to be aligned with the camera
-      Vector3 forward = camera.transform.forward;
-      forward.y = 0;
-      forward = forward.normalized;
 
-      player.transform.rotation = Quaternion.LookRotation(forward);
-/*
-		var rotation = Quaternion.LookRotation(forward);
-		rotation *= player.transform.rotation;
-		player.transform.rotation = rotation;*/
-		//}
+    Vector3 forward = camera.transform.forward;
+    forward.y = 0;
+    forward = forward.normalized;
+    player.transform.rotation = Quaternion.LookRotation(forward);
+
     moveDirection = player.transform.forward * moveInput.y + player.transform.right * moveInput.x;
 
 		if (grounded)
@@ -116,14 +117,13 @@ public class PlayerMovement : MonoBehaviour
 
   private void Jump()
 	{ 
-      rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-      rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
   }
 
   private void GroundedCheck()
 	{
     grounded = Physics.Raycast(player.transform.position, Vector3.down, playerHeight * 0.5f + 0.1f);
-    if (grounded) canJump = true;
 	}
 
   private void ApplyDrag()
@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void ApplyGravity()
 	{
-    //rb.AddForce(Vector3.up * gravity, ForceMode.Acceleration);
+    rb.AddForce(Vector3.up * gravity, ForceMode.Acceleration);
 	}
 
 }
