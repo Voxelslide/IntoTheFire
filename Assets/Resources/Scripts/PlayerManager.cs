@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
 
     //set the layer
-    playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
+    playerParent.GetComponentInChildren<CinemachineVirtualCamera>().gameObject.layer = layerToAdd;
     //add the layer
     playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
     //set the action in the custom cinemachine Input Handler
