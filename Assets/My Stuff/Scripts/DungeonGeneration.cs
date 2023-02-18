@@ -57,9 +57,11 @@ public class DungeonGeneration : MonoBehaviour
       for (int j = 0; j < dungeonSize; j++)
       {
         int roomType = Random.Range(1, 3);
-        //rotation rotates a room 90 degrees about the y axis if it is has an odd i
+        
+        //randomly rotates a room 90 degrees about the y axis
         //0.071 is the rotation needed in the x and z parameters for a 90 degree rotation in a quaternion
-        float rotation = 0.7071f * (i % 2);
+        int rotateOrNot = Random.Range(1, 3);
+        float rotation = 0.7071f * (rotateOrNot % 2);
 
         if (roomType == 1)
         {
