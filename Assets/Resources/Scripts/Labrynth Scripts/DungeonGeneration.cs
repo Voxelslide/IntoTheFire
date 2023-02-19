@@ -7,12 +7,14 @@ public class DungeonGeneration : MonoBehaviour
   [SerializeField]
   private int dungeonSize = 4; //dungeon will have dungeonSize^2 number of rooms
 
-
   //reference to room
   public GameObject teleporterRoom;
   public GameObject room1x1;
   public GameObject room1x2;
   public GameObject room2x2;
+  
+
+
 
   public List<GameObject> trialRooms = new List<GameObject>();
   public List<GameObject> teleporterRooms = new List<GameObject>();
@@ -77,7 +79,7 @@ public class DungeonGeneration : MonoBehaviour
     }
   }
 
-  private void GenerateTeleporterRooms()
+ /* private void GenerateTeleporterRooms()
   {
     //create number of teleporter rooms equal to rows-1 * cols-1
     for (int i = 0; i < dungeonSize - 1; i++)
@@ -88,5 +90,5 @@ public class DungeonGeneration : MonoBehaviour
         teleporterRooms.Add(transform.GetChild(i * (dungeonSize -1) + j).gameObject);
       }
     }
-  }
+  }*/
 }

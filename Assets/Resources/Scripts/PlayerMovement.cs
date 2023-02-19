@@ -45,10 +45,6 @@ public class PlayerMovement : MonoBehaviour
     rb = player.GetComponent<Rigidbody>();
   }
 
-	private void Update()
-	{
-    //Debug.Log("Orientation: " + orientation.rotation.eulerAngles);
-	}
 	void FixedUpdate()
   {
 
