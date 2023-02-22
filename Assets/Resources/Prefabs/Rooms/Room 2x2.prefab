@@ -660,6 +660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trialType: 0
   roomSize: 0
+  enemyPrefab: {fileID: 526047665610924731, guid: d6449215e279f5d46ac1f78dfe05ac7a, type: 3}
   startPad: {fileID: 2746824381483398428, guid: 2bf58b0022f9d7540801a898c497221c, type: 3}
   endPad: {fileID: 4825946071030987746, guid: 8cf69661d2cc996428f2052b200f78c6, type: 3}
 --- !u!65 &185931327664062870

@@ -18,13 +18,16 @@ public class TrialRoomScript : MonoBehaviour
 	private Transform[] doors;
 
 	[SerializeField]
+	private GameObject enemyPrefab;
+
+	[SerializeField]
 	private GameObject startPad; // for startpad prefab
 	[SerializeField]
 	private GameObject endPad;
 	private List<GameObject> trialGeometry = new List<GameObject>();
 	private int roomLength;  //used to determine where trial geometry can be placed & enemies can be spawned
 
-	private List<GameObject> enemyList = new List<GameObject>();
+	private int enemyCount;
 
 	private GameObject playerRef;
 
@@ -144,10 +147,13 @@ public class TrialRoomScript : MonoBehaviour
 
 		//^^Is what I would do if i had time ayoooo
 
+		//Create an endPad at the transform of the room w/ -10 in the z
 		Vector3 endPadPos = this.transform.position + new Vector3(0, 0, 10);
-		Instantiate(endPad, endPadPos, new Quaternion(0, 0, 0, 0), this.transform);//make this at one end of the room////////////////////////////////
+		Instantiate(endPad, endPadPos, new Quaternion(0, 0, 0, 0), this.transform);
 		GameObject endPadReference = transform.GetChild(5).gameObject;
+		//Set the host room of the endPad to this room
 		endPadReference.GetComponent<EndPadScript>().hostRoom = this;
+		//Add the endPad to our trial geometry so we can delete it once a room is cleared
 		trialGeometry.Add(endPadReference);
 
 	}
@@ -163,11 +169,28 @@ public class TrialRoomScript : MonoBehaviour
 	{
 		//spawn a bunch of enemies and add them to List<GameObject>EnemyList
 		//trial is over when EnemyList.Count == 0;
+
+		int numOfEnemies = Random.Range(3, 5);
+		Debug.Log("Number of enemies for this room: " + numOfEnemies);
+		for (int i = 0; i < numOfEnemies; i++)
+		{
+			Vector3 spawnLocation = new Vector3(transform.position.x + Random.Range(-15, 15), 1f, transform.position.z + Random.Range(-15, 15));
+			GameObject enemy = Instantiate(enemyPrefab, spawnLocation, new Quaternion(0, 0, 0, 0), this.transform);
+			enemy.GetComponent<EnemyScript>().hostRoom = this;
+			enemyCount++;
+		}
 	}
+
+	public void DecrementEnemyCount()
+	{
+		enemyCount--;
+	}
+
+
 	public void Update()//is there a way to only call update once a combat room is started?
 	{
 		//checks to see if all enemies are defeated for a combat room
-		if(trialType == TrialType.combat && currRoomState == RoomState.trialing && enemyList.Count == 0)
+		if(trialType == TrialType.combat && currRoomState == RoomState.trialing && enemyCount == 0)
 		{
 			TrialCompleted();
 		}
