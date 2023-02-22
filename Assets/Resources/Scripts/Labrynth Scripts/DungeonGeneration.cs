@@ -6,14 +6,14 @@ public class DungeonGeneration : MonoBehaviour
 {
   [SerializeField]
   private int dungeonSize = 4; //dungeon will have dungeonSize^2 number of rooms
+  //default value is 4 so there won't be any bugs with a 0 size dungeon
 
-  //reference to room
-  public GameObject teleporterRoom;
+
+  //reference to room prefabs
   public GameObject emptyRoom;
   public GameObject room1x2;
   public GameObject room2x2;
   
-
 
 
   public List<GameObject> trialRooms = new List<GameObject>();
@@ -29,8 +29,6 @@ public class DungeonGeneration : MonoBehaviour
 		{
       dungeonSize = 4;
 		}
-
-
     GenerateDungeon();
   }
 
@@ -39,17 +37,6 @@ public class DungeonGeneration : MonoBehaviour
 
     //create trial rooms
     GenerateTrialRooms();
-
-
-    //create teleporter rooms
-
-    //GenerateTeleporterRooms();
-
-
-    //link teleporter rooms to trial rooms
-
-    //link teleporter rooms to trial rooms - bruh how
-
   }
 
   private void GenerateTrialRooms()
@@ -85,16 +72,5 @@ public class DungeonGeneration : MonoBehaviour
     }
   }
 
- /* private void GenerateTeleporterRooms()
-  {
-    //create number of teleporter rooms equal to rows-1 * cols-1
-    for (int i = 0; i < dungeonSize - 1; i++)
-    {
-      for (int j = 0; j < dungeonSize - 1; j++)
-      {
-        Instantiate(teleporterRoom, new Vector3(i * 150f + 100f, 100f, j * 150f + 100f), new Quaternion(0, 0, 0, 0), this.transform);
-        teleporterRooms.Add(transform.GetChild(i * (dungeonSize -1) + j).gameObject);
-      }
-    }
-  }*/
+
 }

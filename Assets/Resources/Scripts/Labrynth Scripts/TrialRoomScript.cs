@@ -19,6 +19,8 @@ public class TrialRoomScript : MonoBehaviour
 
 	[SerializeField]
 	private GameObject startPad; // for startpad prefab
+	[SerializeField]
+	private GameObject endPad;
 	private List<GameObject> trialGeometry = new List<GameObject>();
 	private int roomLength;  //used to determine where trial geometry can be placed & enemies can be spawned
 
@@ -105,12 +107,14 @@ public class TrialRoomScript : MonoBehaviour
 		{
 			//place at the end of the room
 			//Instantiate(startPad prefab, new Vector3(LOCATION), new Quaternion(0, 0, 0, 0), this.transform);
-			Instantiate(startPad, transform.position, new Quaternion(0, 0, 0, 0), this.transform);//took this from combat rom for testing
+
+			Vector3 startPadPos = this.transform.position + new Vector3(0, 0, -10);
+			Instantiate(startPad, startPadPos, new Quaternion(0, 0, 0, 0), this.transform);//make this at one end of the room////////////////////////////////
 		}
 		//transform.Find("StartPad").gameObject.GetComponent<StartPadScript>().hostRoom = this;//transform.GetChild<StartPad>("StartPad") or something
 		GameObject startPadReference = transform.GetChild(4).gameObject;
 		startPadReference.GetComponent<StartPadScript>().hostRoom = this;
-		trialGeometry.Add(transform.GetChild(4).gameObject);
+		trialGeometry.Add(startPadReference);
 	}
 
 	//____________________________________________________________________________________________________________
@@ -137,6 +141,15 @@ public class TrialRoomScript : MonoBehaviour
 		//******************all locations for room geometry must be places in relation to room transform**************
 		//use room type and dungeonDepth to create a room layout with an appropriate difficulty
 		//add everything to List TrialGeometry
+
+		//^^Is what I would do if i had time ayoooo
+
+		Vector3 endPadPos = this.transform.position + new Vector3(0, 0, 10);
+		Instantiate(endPad, endPadPos, new Quaternion(0, 0, 0, 0), this.transform);//make this at one end of the room////////////////////////////////
+		GameObject endPadReference = transform.GetChild(5).gameObject;
+		endPadReference.GetComponent<EndPadScript>().hostRoom = this;
+		trialGeometry.Add(endPadReference);
+
 	}
 	
 	private void GenerateCombatInside()//generate a combat room
@@ -163,7 +176,7 @@ public class TrialRoomScript : MonoBehaviour
 //____________________________________________________________________________________________________________
 
 	//completed trial
-	private void TrialCompleted()
+	public void TrialCompleted()
 	{
 		DespawnTrialGeometry();
 		GivePlayerLoot();
