@@ -58,7 +58,7 @@ public class DungeonGeneration : MonoBehaviour
     {
       for (int j = 0; j < dungeonSize; j++)
       {
-        if ((i == 0 && j == 0) || (i == dungeonSize && j == 0) || (i == 0 && j == dungeonSize) || (i == dungeonSize && j == dungeonSize))//set corner rooms to empty rooms
+        if ((i == 0 && j == 0) || (i == dungeonSize-1 && j == 0) || (i == 0 && j == dungeonSize-1) || (i == dungeonSize-1 && j == dungeonSize-1))//set corner rooms to empty rooms
         {
           Instantiate(emptyRoom, new Vector3(i * 100f, 0f, j * 100f), new Quaternion(0, 0, 0, 0), this.transform);
         }
