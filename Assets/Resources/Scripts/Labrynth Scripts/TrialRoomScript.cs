@@ -6,40 +6,46 @@ public class TrialRoomScript : MonoBehaviour
 {
 	public enum RoomSize
 	{ onextwo, twoxtwo };
-	public enum RoomType
-	{ combat, plat, none};
+	public enum TrialType
+	{ combat, plat, empty};
 
 	public enum RoomState
 	{ empty, closed, trialing, completed};
 
-	public RoomType roomType;
+	public TrialType trialType;
 	public RoomSize roomSize;
 	private RoomState currRoomState;
-	private GameObject doors;
+	private Transform[] doors;
 
 	[SerializeField]
 	private GameObject startPad; // for startpad prefab
-	private List<GameObject> trialGeometry;
+	private List<GameObject> trialGeometry = new List<GameObject>();
 	private int roomLength;  //used to determine where trial geometry can be placed & enemies can be spawned
 
-	private List<GameObject> enemyList;
+	private List<GameObject> enemyList = new List<GameObject>();
 
 	private GameObject playerRef;
 
 	private void Start()
 	{
 		//room initial setup
-		GameObject doors = transform.GetChild(0).gameObject;
+		doors = transform.GetChild(0).transform.GetComponentsInChildren<Transform>();
+		SetDoorPresence(false);
 		currRoomState = RoomState.empty;
 
-		//determine room type
-		if (Random.Range(1, 3) == 1)
+
+		//if this room is an empty room, don't turn it into a combat or platforming room
+		if(trialType != TrialType.empty)
 		{
-			roomType = RoomType.combat;
-		}
-		else
-		{
-			roomType = RoomType.plat;
+			//determine room type
+			if (Random.Range(1, 3) == 1)
+			{
+				trialType = TrialType.combat;
+			}
+			else
+			{
+				trialType = TrialType.plat;
+			}
 		}
 	}
 
@@ -47,42 +53,64 @@ public class TrialRoomScript : MonoBehaviour
 
 	public void OnTriggerEnter(Collider other)
 	{
-		if(other.tag == "Player" && currRoomState == RoomState.empty)
+		Debug.Log(currRoomState);
+		Debug.Log(trialType);
+		//Debug.Log("Collided with: " + other);
+		if(other.transform.tag == "Player" && currRoomState == RoomState.empty)
 		{
+			Debug.Log("Player found for this room");
 			RoomClose();
 			playerRef = other.gameObject;
 		}
+		Debug.Log(doors);
 	}
 
 	//Player enters room
 	private void RoomClose() //called when player first enter's a room's trigger box
 	{
-		CloseDoors();
+		SetDoorPresence(true);
 		currRoomState = RoomState.closed;
 		Debug.Log("Room Closed");
 
 		//Spawn Startpad in appropriate room location
 		PlaceStartPad();
 	}
-	private void CloseDoors()
+	private void SetDoorPresence(bool doorsEnabled)
 	{
-		//each room has 4 exits, each made up of wall tiles.
-		for (int i = 0; i < 8; i++) {
-			doors.transform.GetChild(i).gameObject.SetActive(true);
+		//Debug.Log("Doors are present- " + doorsEnabled);
+
+		foreach (Transform childObject in doors)
+		{
+			MeshRenderer meshRenderer = childObject.GetComponent<MeshRenderer>();
+			if (meshRenderer != null)
+			{
+				meshRenderer.enabled = doorsEnabled;
+			}
+
+			BoxCollider boxCollider = childObject.GetComponent<BoxCollider>();
+			if (boxCollider != null)
+			{
+				boxCollider.enabled = doorsEnabled;
+			}
 		}
 	}
 	private void PlaceStartPad()
 	{
-		if (roomType == RoomType.combat)
+		if (trialType == TrialType.combat)
 		{
-			//Instantiate(startPad prefab, new Vector3(CENTER OF ROOM), new Quaternion(0, 0, 0, 0), this.transform);
+			//place in center of the room
+			Instantiate(startPad, transform.position, new Quaternion(0, 0, 0, 0), this.transform);
 		}
-		if (roomType == RoomType.plat)
+		if (trialType == TrialType.plat)
 		{
 			//place at the end of the room
 			//Instantiate(startPad prefab, new Vector3(LOCATION), new Quaternion(0, 0, 0, 0), this.transform);
+			Instantiate(startPad, transform.position, new Quaternion(0, 0, 0, 0), this.transform);//took this from combat rom for testing
 		}
-		trialGeometry.Add(transform.Find("StartPad").gameObject);
+		//transform.Find("StartPad").gameObject.GetComponent<StartPadScript>().hostRoom = this;//transform.GetChild<StartPad>("StartPad") or something
+		GameObject startPadReference = transform.GetChild(4).gameObject;
+		startPadReference.GetComponent<StartPadScript>().hostRoom = this;
+		trialGeometry.Add(transform.GetChild(4).gameObject);
 	}
 
 	//____________________________________________________________________________________________________________
@@ -90,17 +118,19 @@ public class TrialRoomScript : MonoBehaviour
 	//Generate Trial Geometry and Start Trial
 	public void StartTrial()//called by the startpad when player enters the startpad's trigger area
 	{
-		if (roomType == RoomType.combat)
-		{
-			GenerateCombatInside();
-			SpawnEnemies();
+		if (currRoomState == RoomState.closed) {
+			if (trialType == TrialType.combat)
+			{
+				GenerateCombatInside();
+				SpawnEnemies();
+			}
+			if (trialType == TrialType.plat)
+			{
+				GeneratePlatInside();
+			}
+			currRoomState = RoomState.trialing;
+			Debug.Log("Trial Started");
 		}
-		if (roomType == RoomType.plat)
-		{
-			GeneratePlatInside();
-		}
-		currRoomState = RoomState.trialing;
-		Debug.Log("Trial Started");
 	}
 	private void GeneratePlatInside()//generate a platforming room
 	{
@@ -124,7 +154,7 @@ public class TrialRoomScript : MonoBehaviour
 	public void Update()//is there a way to only call update once a combat room is started?
 	{
 		//checks to see if all enemies are defeated for a combat room
-		if(roomType == RoomType.combat && currRoomState == RoomState.trialing && enemyList.Count == 0)
+		if(trialType == TrialType.combat && currRoomState == RoomState.trialing && enemyList.Count == 0)
 		{
 			TrialCompleted();
 		}
@@ -139,23 +169,19 @@ public class TrialRoomScript : MonoBehaviour
 		GivePlayerLoot();
 		currRoomState = RoomState.completed;
 		Debug.Log("Room Completed");
-		OpenDoors();
+		SetDoorPresence(false);
 	}
 	private void DespawnTrialGeometry()
 	{
 		//go through trial geometry list and set to Active(false)
+		foreach(GameObject thing in trialGeometry)
+		{
+			thing.SetActive(false);
+		}
 	}
 	private void GivePlayerLoot()
 	{
 		//use playerRef to give loot
-	}
-	private void OpenDoors()
-	{
-		//each room has 4 exits, each made up of wall tiles.
-		for (int i = 0; i < 8; i++)
-		{
-			doors.transform.GetChild(i).gameObject.SetActive(false);
-		}
 	}
 
 
